@@ -12,62 +12,6 @@ import json
 import time
 import gc
 
-# ---------------- 参数配置 ----------------
-class Config:
-    ##################
-    # 数据集参数
-    ##################
-    DATA_SOURCES = {
-        #'brightness_temp': "./data/datasets/ice_blocks.h5",
-        'flow': "./data/datasets/flow_blocks.h5",
-        #'wind_speed': "./data/datasets/wind_speed.h5",
-        'wind_uv': "./data/datasets/wind_data_12UTC.h5",
-        #'sst': "./data/datasets/sea_surface_temp.h5"
-    }
-
-    INPUT_STEPS = 10
-    OUTPUT_STEPS = 10
-    STEP = 20
-
-    MIN_SAFE_BUFFER = 5
-    PRELOAD_MEMORY = True
-
-    ##################
-    # 模型参数
-    ##################
-    HIDDEN_CHANNELS = [128, 64, 32]
-    KERNEL_SIZE = 3
-
-    @property
-    def MODEL_INPUT_CHANNELS(self):
-        return len(self.DATA_SOURCES)
-
-    ##################
-    # 训练参数
-    ##################
-    BATCH_SIZE = 64
-    EPOCHS = 50
-    LEARNING_RATE = 1e-3
-    WEIGHT_DECAY = 1e-5
-
-    EARLY_STOPPING_PATIENCE = 10
-    EARLY_STOPPING_DELTA = 0.001
-
-    USE_CUDA = True
-    NUM_WORKERS = 2
-    PREFETCH_FACTOR = 4
-    PERSISTENT_WORKERS = True
-
-    ##################
-    # 输出设置
-    ##################
-    BASE_OUTPUT_DIR = "save"
-    SEED = 42
-    SAVE_MODEL_EVERY_EPOCH = 10
-    ENABLE_TENSORBOARD = True
-
-
-# ---------------- 工具函数 ----------------
 def set_seed(seed=42):
     random.seed(seed)
     np.random.seed(seed)
@@ -277,4 +221,5 @@ def main():
 
 
 if __name__ == "__main__":
+
     main()
