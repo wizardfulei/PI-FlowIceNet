@@ -63,7 +63,6 @@ class MomentumFlowLoss(nn.Module):
 
 
 class FlowTrainer:
-    """光流训练器（只处理光流输出）"""
 
     def __init__(
             self,
@@ -122,7 +121,6 @@ class FlowTrainer:
         self.final_test_loss = None
 
     def get_teacher_forcing_ratio(self, epoch, total_epochs):
-        """计算教师强制比率"""
         if total_epochs == 1:
             return self.initial_tf
         return self.initial_tf - (self.initial_tf - self.final_tf) * (epoch - 1) / (total_epochs - 1)
@@ -137,17 +135,14 @@ class FlowTrainer:
         teacher_forcing_ratio = self.get_teacher_forcing_ratio(epoch, total_epochs)
 
         for inputs, targets in bar:
-            # 将输入移动到设备
             inputs = inputs.to(device, non_blocking=True)
 
-            # 将目标字典中的光流张量移动到设备
             flow_targets = targets['flow'].to(device, non_blocking=True)
 
             self.optimizer.zero_grad(set_to_none=True)
 
             if self.scaler is not None:
                 with amp.autocast():
-                    # 模型调用不再需要亮温目标
                     outputs = self.model(inputs, teacher_forcing_ratio=teacher_forcing_ratio)
 
                     # 计算光流损失
@@ -312,4 +307,5 @@ class FlowTrainer:
         self.save_history_to_npy()
         self.plot_loss_curves()
         print("\n🏁 Training finished.")
+
         return self.final_test_loss
