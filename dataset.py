@@ -21,7 +21,7 @@ warnings.filterwarnings("ignore", category=FutureWarning)
 class MultiSourceTimeIsolatedDataset(Dataset):
     """支持多源输入的时间隔离数据集"""
 
-    def __init__(self, data_paths, split, input_steps=15, output_steps=5, step=1, norm_stats=None,
+    def __init__(self, data_paths, split, input_steps, output_steps, step, norm_stats=None,
                  min_safe_buffer=5, preload_to_memory=False, seed=42):
         # 初始化参数
         self.data_paths = data_paths
@@ -33,7 +33,7 @@ class MultiSourceTimeIsolatedDataset(Dataset):
         self.step = step
         self.min_safe_buffer = min_safe_buffer
         self.preload_to_memory = preload_to_memory
-        self.seed = seed  # 固定随机种子确保可复现性
+        self.seed = seed
 
         # 初始化数据结构
         self.sequence_starts = []
